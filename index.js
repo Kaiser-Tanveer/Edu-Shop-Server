@@ -28,6 +28,7 @@ const run = () => {
         // Collections 
         const categoriesCollection = client.db("EduShop").collection("categories");
         const productsCollection = client.db("EduShop").collection("products");
+        const bookingsCollection = client.db("EduShop").collection("bookings");
 
 
         // getting categories 
@@ -66,6 +67,12 @@ const run = () => {
             console.log(id);
             const filter = { _id: ObjectId(id) };
             const result = await productsCollection.findOne(filter);
+            res.send(result);
+        })
+
+        app.post('/myProducts', async (req, res) => {
+            const product = req.body;
+            const result = await bookingsCollection.insertOne(product);
             res.send(result);
         })
 
