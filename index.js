@@ -76,6 +76,12 @@ const run = () => {
             res.send(result);
         })
 
+        app.get('/myProducts', async (req, res) => {
+            const query = {};
+            const products = await bookingsCollection.find(query).toArray();
+            res.send(products);
+        })
+
     }
     finally {
 
