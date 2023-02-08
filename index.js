@@ -30,6 +30,7 @@ const run = () => {
         const productsCollection = client.db("EduShop").collection("products");
         const bookingsCollection = client.db("EduShop").collection("bookings");
         const wishlistsCollection = client.db("EduShop").collection("wishlists");
+        const checkoutCollection = client.db("EduShop").collection("checkout");
 
 
         // getting categories 
@@ -93,6 +94,33 @@ const run = () => {
         app.post('/dashboard/wishlists', async (req, res) => {
             const product = req.body;
             const result = await wishlistsCollection.insertOne(product);
+            res.send(result);
+        })
+
+        app.get('/dashboard/wishlists', async (req, res) => {
+            const query = {};
+            const lists = await wishlistsCollection.find(query).toArray();
+            res.send(lists);
+        })
+
+        app.post('/dashboard/checkout', async (req, res) => {
+            const product = req.body;
+            const result = await checkoutCollection.insertOne(product);
+            res.send(result);
+        })
+
+        app.get('/dashboard/checkout', async (req, res) => {
+            const query = {};
+            const result = await checkoutCollection.find(query).toArray();
+            res.send(result);
+        })
+
+        app.delete('/dashboard/wishlists/:id', async (req, res) => {
+            const id = req.params.id;
+            const filter = { _id: ObjectId(id) }
+            console.log(id);
+            const result = await wishlistsCollection.deleteOne(filter);
+            console.log(result);
             res.send(result);
         })
 
